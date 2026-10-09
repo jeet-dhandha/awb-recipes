@@ -1,0 +1,33 @@
+{
+  "id": "github-trending",
+  "title": "Read GitHub Trending (daily, weekly, by language)",
+  "site": "github.com",
+  "task": "List trending repositories for a language and time window.",
+  "status": "needs-verification",
+  "verified_on": null,
+  "awb_min_version": "1.2.0",
+  "requires_login": true,
+  "steps": [
+    {
+      "action": "navigate",
+      "args": {
+        "url": "https://github.com/trending/typescript?since=weekly",
+        "newTab": true
+      }
+    },
+    {
+      "action": "evaluate",
+      "args": {
+        "code": "(()=>[...document.querySelectorAll('article.Box-row h2 a')].map(a=>a.getAttribute('href').slice(1)))()"
+      }
+    }
+  ],
+  "caveats": [
+    "Markup changes occasionally; if the selector returns an empty list, snapshot the page and open a PR with the new one."
+  ],
+  "tags": [
+    "github",
+    "discovery"
+  ],
+  "author": "jeet-dhandha"
+}

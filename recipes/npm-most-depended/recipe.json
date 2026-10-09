@@ -1,0 +1,36 @@
+{
+  "id": "npm-most-depended",
+  "title": "Collect package names from npm's most-depended-upon list",
+  "site": "npmjs.com",
+  "task": "Build a candidate list of popular npm packages when no bulk API exists.",
+  "status": "needs-verification",
+  "verified_on": null,
+  "awb_min_version": "1.2.0",
+  "requires_login": true,
+  "steps": [
+    {
+      "action": "navigate",
+      "args": {
+        "url": "https://www.npmjs.com/browse/depended",
+        "newTab": true
+      }
+    },
+    {
+      "action": "evaluate",
+      "args": {
+        "code": "(()=>[...document.querySelectorAll('a[href^=\"/package/\"]')].map(a=>a.getAttribute('href').replace('/package/','')))()"
+      },
+      "note": "Enrich the names with api.npmjs.org/downloads/point/last-week/<pkg>, which does have an API."
+    }
+  ],
+  "caveats": [
+    "Rule of thumb: scrape what has no API to get names, then use the API that exists to enrich them.",
+    "npmjs.com may show a challenge page to automated traffic. A real signed-in browser usually avoids it."
+  ],
+  "tags": [
+    "npm",
+    "scraping",
+    "discovery"
+  ],
+  "author": "jeet-dhandha"
+}

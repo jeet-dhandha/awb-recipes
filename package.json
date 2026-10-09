@@ -1,0 +1,9 @@
+{
+  "name": "awb-recipes",
+  "version": "0.1.0",
+  "private": true,
+  "description": "Community-maintained, versioned recipes for automating logged-in websites with agent-webbridge.",
+  "type": "module",
+  "scripts": { "validate": "node scripts/validate.mjs", "test": "node scripts/validate.test.mjs && node scripts/validate.mjs" },
+  "license": "MIT"
+}

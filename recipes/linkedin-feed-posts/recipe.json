@@ -1,0 +1,44 @@
+{
+  "id": "linkedin-feed-posts",
+  "title": "Read the home feed on LinkedIn's redesigned React feed",
+  "site": "linkedin.com",
+  "task": "List the posts currently rendered in the home feed (author, text, age) without relying on class names.",
+  "status": "needs-verification",
+  "verified_on": null,
+  "awb_min_version": "1.2.0",
+  "requires_login": true,
+  "steps": [
+    {
+      "action": "navigate",
+      "args": {
+        "url": "https://www.linkedin.com/feed/",
+        "newTab": true
+      }
+    },
+    {
+      "action": "evaluate",
+      "args": {
+        "code": "(()=>[...document.querySelectorAll('div[data-testid=\"mainFeed\"] div[role=\"listitem\"]')].map(p=>({text:p.innerText.slice(0,280)})))()"
+      },
+      "note": "Posts are role=listitem under data-testid=mainFeed. Do not use class names: they are hashed per build."
+    },
+    {
+      "action": "evaluate",
+      "args": {
+        "code": "(()=>{const m=document.querySelector('main main')||document.querySelector('main');m.scrollBy(0,2000);return true})()"
+      },
+      "note": "The feed scrolls inside an inner <main>, not the window."
+    }
+  ],
+  "caveats": [
+    "The old selectors (feed-shared-update-v2, data-urn=urn:li:activity) return nothing on the redesigned feed.",
+    "Class names are hashed per build; use data-testid and ARIA roles.",
+    "The post composer is an obfuscated React link that automation cannot reliably open. Do not spend time on it."
+  ],
+  "tags": [
+    "linkedin",
+    "scraping",
+    "feed"
+  ],
+  "author": "jeet-dhandha"
+}

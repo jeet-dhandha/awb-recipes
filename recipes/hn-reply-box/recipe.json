@@ -1,0 +1,36 @@
+{
+  "id": "hn-reply-box",
+  "title": "Locate the comment box on a Hacker News reply or item page",
+  "site": "news.ycombinator.com",
+  "task": "Find the textarea used for replying so a human-approved comment can be filled in.",
+  "status": "verified",
+  "verified_on": "2026-08-11",
+  "awb_min_version": "1.2.0",
+  "requires_login": true,
+  "steps": [
+    {
+      "action": "navigate",
+      "args": {
+        "url": "https://news.ycombinator.com/item?id=<id>",
+        "newTab": true
+      }
+    },
+    {
+      "action": "evaluate",
+      "args": {
+        "code": "(()=>{const t=document.querySelector('form[action=\"comment\"] textarea[name=\"text\"]');return t?{rows:t.rows,cols:t.cols}:null})()"
+      },
+      "note": "Both the item page and the reply page use this same box."
+    }
+  ],
+  "caveats": [
+    "Verified on a reply page on 2026-08-11 by the author.",
+    "HN rate-limits and kills spammy or link-heavy comments from new accounts. This recipe locates the box; whether to post is your call.",
+    "Do not check liveness by curl + grep: HN answers a burst with HTTP 429 and a 6-byte body, which looks identical to a hidden comment. Use the Firebase API's `dead` field."
+  ],
+  "tags": [
+    "hacker-news",
+    "forms"
+  ],
+  "author": "jeet-dhandha"
+}

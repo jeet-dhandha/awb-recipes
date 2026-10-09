@@ -1,0 +1,35 @@
+{
+  "id": "google-search-results",
+  "title": "Read Google search results without tripping CAPTCHA",
+  "site": "google.com",
+  "task": "Extract result titles and URLs for a query across several profiles.",
+  "status": "needs-verification",
+  "verified_on": null,
+  "awb_min_version": "1.2.0",
+  "requires_login": true,
+  "steps": [
+    {
+      "action": "navigate",
+      "args": {
+        "url": "https://www.google.com/search?q=<query>",
+        "newTab": true
+      }
+    },
+    {
+      "action": "evaluate",
+      "args": {
+        "code": "(()=>[...document.querySelectorAll('a h3')].map(h=>({title:h.innerText,url:h.closest('a').href})))()"
+      }
+    }
+  ],
+  "caveats": [
+    "One signed-in profile hit a CAPTCHA after roughly 35 queries; three profiles together after roughly 75. Spread load across profiles and add cooldowns, and stop when a CAPTCHA appears.",
+    "Scraping Google results may breach its terms; use this only where that is acceptable to you."
+  ],
+  "tags": [
+    "google",
+    "search",
+    "rate-limits"
+  ],
+  "author": "jeet-dhandha"
+}

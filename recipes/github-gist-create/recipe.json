@@ -1,0 +1,53 @@
+{
+  "id": "github-gist-create",
+  "title": "Create a GitHub gist from your logged-in session",
+  "site": "gist.github.com",
+  "task": "Publish a file as a public or secret gist without a personal access token.",
+  "status": "needs-verification",
+  "verified_on": null,
+  "awb_min_version": "1.2.0",
+  "requires_login": true,
+  "steps": [
+    {
+      "action": "navigate",
+      "args": {
+        "url": "https://gist.github.com",
+        "newTab": true
+      },
+      "note": "Opens the gist editor in the signed-in profile."
+    },
+    {
+      "action": "snapshot",
+      "note": "Find the description, filename and content fields by their @e refs."
+    },
+    {
+      "action": "fill",
+      "args": {
+        "selector": "<filename field @e ref>",
+        "value": "notes.md"
+      }
+    },
+    {
+      "action": "evaluate",
+      "args": {
+        "code": "(()=>{const cm=document.querySelector('.CodeMirror').CodeMirror;cm.setValue(\"hello\");return cm.getValue().length})()"
+      },
+      "note": "The content box is CodeMirror, so fill() on the textarea does not stick; set it through the CodeMirror instance."
+    },
+    {
+      "action": "snapshot",
+      "note": "The create button is a split button: the arrow opens the public/secret choice. Pick it, then click create."
+    }
+  ],
+  "caveats": [
+    "Content is a CodeMirror editor: use the instance's setValue, not fill().",
+    "The create control is a split button; choose public vs secret from its menu before clicking.",
+    "GitHub changes this page now and then. If a step breaks, open a PR with the new selector and bump verified_on."
+  ],
+  "tags": [
+    "github",
+    "gist",
+    "publishing"
+  ],
+  "author": "jeet-dhandha"
+}
